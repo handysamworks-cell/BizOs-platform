@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-line;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-ink font-body antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-head text-ink;
+  }
+  a, button {
+    @apply outline-none;
+  }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+    @apply ring-2 ring-signal ring-offset-2 ring-offset-paper;
+  }
+}
+
+@layer utilities {
+  .corner-bracket {
+    position: relative;
+  }
+  .corner-bracket::before,
+  .corner-bracket::after {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: currentColor;
+    opacity: 0.6;
+  }
+  .corner-bracket::before {
+    top: -1px;
+    left: -1px;
+    border-top: 2px solid;
+    border-left: 2px solid;
+  }
+  .corner-bracket::after {
+    bottom: -1px;
+    right: -1px;
+    border-bottom: 2px solid;
+    border-right: 2px solid;
+  }
+}
+
+@keyframes draw-line {
+  from {
+    stroke-dashoffset: var(--draw-length, 1000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.draw-in path,
+.draw-in line,
+.draw-in circle,
+.draw-in rect {
+  stroke-dasharray: var(--draw-length, 1000);
+  stroke-dashoffset: var(--draw-length, 1000);
+  animation: draw-line 1.8s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
